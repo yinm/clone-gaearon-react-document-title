@@ -1,1 +1,1 @@
-# clone-gaearon-react-document-title
+Clone [gaearon/react-document-title: Declarative, nested, stateful, isomorphic document.title for React](https://github.com/gaearon/react-document-title) for study.
