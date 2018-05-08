@@ -88,3 +88,39 @@ describe('DocumentTitle', () => {
     )
   })
 })
+
+describe('DocumentTitle.rewind', () => {
+  it('clears the mounted instances', () => {
+    ReactDOMServer.renderToStaticMarkup(
+      React.createElement(DocumentTitle, {title: 'a'},
+        React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: 'c'}))
+      )
+    )
+
+    expect(DocumentTitle.peek()).to.equal('c')
+    DocumentTitle.rewind()
+    expect(DocumentTitle.peek()).to.equal(undefined)
+  })
+
+  it('returns the latest document title', () => {
+    const title = 'cheese'
+    ReactDOMServer.renderToStaticMarkup(
+      React.createElement(DocumentTitle, {title: 'a'},
+        React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: title}))
+      )
+    )
+
+    expect(DocumentTitle.rewind()).to.equal(title)
+  })
+
+  it('returns undefined if no mounted instances exist', () => {
+    ReactDOMServer.renderToStaticMarkup(
+      React.createElement(DocumentTitle, {title: 'a'},
+        React.createElement(DocumentTitle, {title: 'b'}, React.createElement(DocumentTitle, {title: 'c'}))
+      )
+    )
+
+    DocumentTitle.rewind()
+    expect(DocumentTitle.peek()).to.equal(undefined)
+  })
+})
